@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <link href="../imagens/icone.ico" rel="icon" />
+
+        <title>Login</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/ie10-viewport-bug-workaround.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/signin.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+
+        <link href="../resources/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+
+        <!-- Custom styles for this template -->
+        <link href="../resources/css/carousel.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <p:growl id="MenssagemGenerica"/>
+        <div class="navbar-wrapper">
+            <div class="container">
+                <div>
+                    <h:form class="form-signin" id="form" onsubmit="return validacao();">
+                        <h2 class="form-group">Por favor, insira os dados requisitados para continuar.</h2>
+
+                        <h4 class="form-group">E-mail</h4>
+                        <label for="inputText" class="sr-only">E-mail</label>
+                        <h:inputText value="#{conferePessoa.email}" id="email" class="form-control" required = "true">
+                            <f:passThroughAttribute name="placeholder" value="insira.seu.email@upe.br" />
+                        </h:inputText>
+                        
+                        <h4 class="form-group"> Senha</h4>
+                        <h:inputSecret value="#{conferePessoa.senha}" id="senha" class="form-control" required = "true">
+                            <f:passThroughAttribute name="placeholder" value="Insira sua senha" />
+                        </h:inputSecret>
+
+                        <p:commandLink id="submit" type="submit" action="#{conferePessoa.logar()}"
+                            update=":MenssagemGenerica" styleClass="btn btn-lg btn-success btn-block">
+                            <i class="glyphicon glyphicon-user"></i> Entrar
+                            <f:ajax render="@form" resetValues="true"/>
+                        </p:commandLink>
+                        
+                        <footer>
+                            <center><br/><p>&copy; 2017 Hilton, Igor, Iara, Matheus, Vínicius &middot; <a href="#">Privacidade</a> &middot; <a href="#">Termos</a></p></center>
+                        </footer>
+                    </h:form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+
+
+        <script type="text/javascript">
+            $('.selectpicker').selectpicker();
+        </script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--<script>window.jQuery || document.write('<script src="./resources/js/jquery.min.js"><\/script>');</script>-->
+        <script src="../resources/js/bootstrap.min.js"></script>
+        <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+        <script src="../resources/js/holder.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="../resources/js/ie10-viewport-bug-workaround.js"></script>
+
+        <script src="../resources/js/ie-emulation-modes-warning.js"></script>
+
+        <script src="../resources/js/bootstrap-select.min.js"></script>
+
+        <script src="../resources/js/jasny-bootstrap.min.js"></script>
+        
+        
+    </h:body>
+</html>
+

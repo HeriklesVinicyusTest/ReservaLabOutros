@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <link href="../imagens/icone.ico" rel="icon" />
+
+        <title>Tipo da Reserva</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/ie10-viewport-bug-workaround.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/signin.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../resources/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css"/>
+       
+
+        <!-- Custom styles for this template -->
+        <link href="../resources/css/carousel.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <!-- NAVBAR
+    ================================================== -->
+    
+    <!--verifica se o usuário está logado, se ele estiver carrega a página normalmente caso
+    contrário encaminha para a página de login-->
+    #{conferePessoa.testeLog()}
+    
+    <h:body>
+        
+        <!--Esse script serve para limpar a sessão assim que o usuário fechar o navegador-->
+        <script language="JavaScript">
+            window.onbeforeunload = WindowCloseHanlder;
+            function WindowCloseHanlder()
+            {
+            window.alert('My Window is reloading');
+            }
+        </script>
+        
+        <div class="navbar-wrapper">
+            <div class="container">
+            <div>
+                <h:form class="form-signin" id="form">
+                    <h2 class="form-group">Informe o tipo da sua nova reserva para continuar.</h2>
+
+                    <h4 class="form-group">Tipo</h4>
+                    <h:selectOneMenu class="form-control" id="tipo" required = "true" value="#{tipoReserva.tipo}">
+                            <f:selectItem itemValue="Selecione o tipo de reserva" noSelectionOption="true"/>
+                            <f:selectItem itemValue="1" itemLabel="Normal"/> 
+                            <f:selectItem itemValue="2" itemLabel="Estendida"/>
+                    </h:selectOneMenu>
+                    <br/>
+                    <h:commandLink type="submit" action="#{redirecionadorReserva.VerificaReserva(tipoReserva)}"
+                            styleClass="btn btn-lg btn-success btn-block">
+                            <i class="glyphicon glyphicon-share-alt"></i> Enviar
+                            <f:ajax render="@form" resetValues="true"/>
+                        </h:commandLink>
+                    <footer>
+                        <center><br/><p>&copy; 2017 Hilton, Igor, Iara, Matheus, Vínicius &middot; <a href="#">Privacidade</a> &middot; <a href="#">Termos</a></p></center>
+                    </footer>
+                </h:form>
+            </div>
+
+        </div>
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        
+
+        <script type="text/javascript">
+            $('.selectpicker').selectpicker();
+        </script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--<script>window.jQuery || document.write('<script src="./resources/js/jquery.min.js"><\/script>')</script>-->
+        <script src="../resources/js/bootstrap.min.js"></script>
+        <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+        <script src="../resources/js/holder.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="../resources/js/ie10-viewport-bug-workaround.js"></script>
+
+        <script src="../resources/js/ie-emulation-modes-warning.js"></script>
+
+        <script src="../resources/js/bootstrap-select.min.js"></script>
+
+        <script src="../resources/js/jasny-bootstrap.min.js"></script>
+        </div>    
+    </h:body>
+</html>
