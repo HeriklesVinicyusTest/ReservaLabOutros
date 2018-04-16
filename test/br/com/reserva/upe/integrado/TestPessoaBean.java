@@ -50,7 +50,7 @@ public class TestPessoaBean {
     public void salvarPessoa() {
         boolean aux = false;
         pb = new PessoaBean();
-        p = new Pessoa("lala@lili", "123");
+        p = new Pessoa("lala@lili1", "1231");
         pb.salvarPessoa(p);
         List<Pessoa> lp = new ListarPessoasBean().getLista();
         for (Pessoa pessoa : lp) {
