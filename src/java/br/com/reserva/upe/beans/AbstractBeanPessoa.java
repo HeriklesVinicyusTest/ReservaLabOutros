@@ -5,26 +5,24 @@
  */
 package br.com.reserva.upe.beans;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import br.com.reserva.upe.dao.IDAO_Pessoa;
+import br.com.reserva.upe.dao.PessoaDAO;
+import br.com.reserva.upe.modelo.Pessoa;
 
 public abstract class AbstractBeanPessoa<T> {
 
-    private IDAO_Pessoa<T> dao;
-    private T current;
+    private PessoaDAO dao;
+    private Pessoa current;
 
-    public T getCurrent() {
+    public Pessoa getCurrent() {
         return current;
     }
 
-    public void setCurrent(T current) {
+    public void setCurrent(Pessoa current) {
         this.current = current;
     }
 
-    private IDAO_Pessoa<T> getDAO() {
+    private PessoaDAO getDAO() {
         if (dao == null) {
             dao = createDao();
         }
@@ -32,17 +30,13 @@ public abstract class AbstractBeanPessoa<T> {
     }
 
     public void salvar() {
-        try {
-            getDAO().Cadastrar(current);
-        } catch (SQLException ex) {
-            Logger.getLogger(PessoaBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        getDAO().cadastrar(current);
         novo();
     }
 
     abstract void novo();
 
-    abstract IDAO_Pessoa<T> createDao();
+    abstract PessoaDAO createDao();
 
     @PostConstruct
     public void init() {

@@ -5,21 +5,18 @@
  */
 package br.com.reserva.upe.beans;
 
-import br.com.reserva.upe.dao.IDAO;
-import br.com.reserva.upe.modelo.Pessoa;
-import java.nio.file.Files;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import br.com.reserva.upe.dao.DAO;
 
 /**
  *
- * @author israel
+ * @author Hérikles
  */
 public abstract class AbstractBean<T> {
 
-    private IDAO<T> dao;
+    private DAO<T> dao;
     private T current;
 
     public T getCurrent() {
@@ -30,7 +27,7 @@ public abstract class AbstractBean<T> {
         this.current = current;
     }
 
-    private IDAO<T> getDAO() {
+    private DAO<T> getDAO() {
         if (dao == null) {
             dao = createDao();
         }
@@ -39,8 +36,8 @@ public abstract class AbstractBean<T> {
 
     public void salvar() {
         try {
-            getDAO().Cadastrar(current);
-        } catch (SQLException ex) {
+            getDAO().cadastrar(current);
+        } catch (Exception ex) {
             Logger.getLogger(PessoaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         novo();
@@ -48,8 +45,8 @@ public abstract class AbstractBean<T> {
     
     public void apagar(){
         try{
-        getDAO().Apagar(current);
-        }catch(SQLException ex){
+        getDAO().apagar(current);
+        }catch(Exception ex){
             Logger.getLogger(PessoaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -59,7 +56,7 @@ public abstract class AbstractBean<T> {
     
     
 
-    abstract IDAO<T> createDao();
+    abstract DAO<T> createDao();
 
     @PostConstruct
     public void init() {

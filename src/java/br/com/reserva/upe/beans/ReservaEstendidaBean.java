@@ -5,8 +5,13 @@
  */
 package br.com.reserva.upe.beans;
 
-import br.com.reserva.upe.dao.DAO_Horario;
 import br.com.reserva.upe.dao.DAO_Reserva;
+import br.com.reserva.upe.dao.HorarioDAO;
+import br.com.reserva.upe.dao.PessoaDAO;
+import br.com.reserva.upe.dao.ReservaDAO;
+import br.com.reserva.upe.dao.hibenate.HorarioHibernate;
+import br.com.reserva.upe.dao.hibenate.PessoaHibernate;
+import br.com.reserva.upe.dao.hibenate.ReservaHibernate;
 import br.com.reserva.upe.modelo.Horario;
 import br.com.reserva.upe.modelo.Reserva;
 import br.com.reserva.upe.util.EnviarEmail;
@@ -36,35 +41,29 @@ public class ReservaEstendidaBean {
     private Reserva novaReserva;
     private Reserva reservaAtual;
     private List<SelectItem> horariosSelect;
-    
+
     public ReservaEstendidaBean() {
     }
-     private Integer id_certo;
+    private Integer id_certo;
 
-       public void salvarReserva(Reserva r, int id, String email) {
+    public void salvarReserva(Reserva r, int id, String email) {
 
-        DAO_Reserva dao = new DAO_Reserva();
-        r.setIdPessoa(id);
+        ReservaDAO dao = new ReservaHibernate();
+        PessoaDAO p = new PessoaHibernate();
+        r.setPessoa(p.recuperar(id));
 
         try {
-            dao.Cadastrar(r);
+            dao.cadastrar(r);
             novaReserva = r;
-            
-            //limpa os dados da reserva para não aparecer no formulário
-            //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaN");
-            
+
             //permite que seja mostrada a mensagem após o redirecionamento dá página
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             FacesUtil.MensagemIformativa(""
                     + "------------------------------------------"
                     + "A nova reserva foi efetuada com sucesso!");
-            
+
             FacesContext.getCurrentInstance().getExternalContext().redirect("minhasReservas.xhtml");
             EnviarEmail.enviarEmail(email);
-
-        } catch (SQLException ex) {
-            System.out.println("Erro de SQL: " + ex);
-            FacesUtil.MensagemErro("Não foi possível salvar a reserva! :/");
 
         } catch (IOException ex) {
             Logger.getLogger(ReservaNormalBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,38 +72,20 @@ public class ReservaEstendidaBean {
     }
 
     public void excluirReserva(Reserva reserva) {
-        DAO_Reserva dao = new DAO_Reserva();
+        ReservaDAO dao = new ReservaHibernate();
 
+        dao.apagar(reserva);
         try {
-            dao.Apagar(reserva);
-
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("minhasReservas.xhtml");
-                FacesUtil.MensagemIformativa("A reserva foi excluida com sucesso!");
-            } catch (IOException ex) {
-                Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Erro de SQL: " + ex);
-            FacesUtil.MensagemErro("Não foi possível excluir a sua reserva! :/");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("minhasReservas.xhtml");
+            FacesUtil.MensagemIformativa("A reserva foi excluida com sucesso!");
+        } catch (IOException ex) {
+            Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-//    public String editarReserva(Reserva reserva){
-//        this.novaReserva = reserva;
-//        
-//        FacesContext fc = FacesContext.getCurrentInstance();
-//        HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
-//        session.setAttribute("reservaN", this.novaReserva);
-//        
-//        return "alterarReservas.xhtml";
-//        
-//    }
     public void editarReserva(Reserva reserva) {
-        //this.novaReserva = reserva;
         this.reservaAtual = reserva;
         this.id_certo = reserva.getId();
-        //this.novaReserva.setId(id);
 
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
@@ -121,26 +102,25 @@ public class ReservaEstendidaBean {
         DAO_Reserva dao = new DAO_Reserva();
         try {
             dao.Atualizar2(reserva, id);
-            
+
             //limpa os dados da reserva para não aparecer no formulário
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaNormal");
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("reservaN");
-            
+
             //permite que seja mostrada a mensagem após o redirecionamento dá página
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             FacesUtil.MensagemIformativa(""
                     + "------------------------------------------"
                     + "A reserva foi atualizada com sucesso!");
-            
+
             FacesContext.getCurrentInstance().getExternalContext().redirect("minhasReservas.xhtml");
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ReservaNormalBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ReservaNormalBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-  
 
     public Reserva getNovaReserva() {
         return novaReserva;
@@ -161,18 +141,18 @@ public class ReservaEstendidaBean {
     public Integer getIdCerto() {
         return id_certo;
     }
-    
+
     //metodo que tras uma lista de selectItem do banco de dados
     public SelectItem[] horariosSelect(String data, String laboratorio) {
 
-        DAO_Horario dao = new DAO_Horario();
-        
+        HorarioDAO dao = new HorarioHibernate();
+
         List<Horario> horarios = dao.horariosSemReserva(data, laboratorio);
 
         SelectItem[] items = new SelectItem[horarios.size()];
-        
+
         int i = 0;
-        
+
         for (Object x : horarios) {
 
             items[i++] = new SelectItem(x, x.toString());
@@ -196,8 +176,8 @@ public class ReservaEstendidaBean {
         }
 
     }
-    
-    public void parte2DaReserva(){
+
+    public void parte2DaReserva() {
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("reservaEstendidaPart2.xhtml");
         } catch (IOException ex) {

@@ -1,20 +1,16 @@
 package br.com.reserva.upe.beans;
 
-import br.com.reserva.upe.dao.DAO_Pessoa;
-import br.com.reserva.upe.dao.DAO_Reserva;
 import br.com.reserva.upe.modelo.Pessoa;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import br.com.reserva.upe.dao.IDAO_Pessoa;
-import br.com.reserva.upe.modelo.Reserva;
-import br.com.reserva.upe.util.EnviarEmail;
 import br.com.reserva.upe.util.FacesUtil;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import br.com.reserva.upe.dao.PessoaDAO;
+import br.com.reserva.upe.dao.hibenate.PessoaHibernate;
 
 /**
  *
@@ -36,17 +32,17 @@ public class PessoaBean extends AbstractBeanPessoa<Pessoa>{
     }
 
     @Override
-    public IDAO_Pessoa<Pessoa> createDao() {
-        return new DAO_Pessoa();
+    public PessoaDAO createDao() {
+        return new PessoaHibernate();
     }
     
     
     public void salvarPessoa(Pessoa pessoa) {
 
-        DAO_Pessoa dao = new DAO_Pessoa();
+        PessoaDAO dao = new PessoaHibernate();
         
         try {
-            dao.Cadastrar(pessoa);
+            dao.cadastrar(pessoa);
             novaPessoa = pessoa;
             
             //limpa os dados da reserva para não aparecer no formulário
@@ -61,21 +57,19 @@ public class PessoaBean extends AbstractBeanPessoa<Pessoa>{
             
             FacesContext.getCurrentInstance().getExternalContext().redirect("usuarios.xhtml");
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Erro de SQL: " + ex);
             FacesUtil.MensagemErro("Não foi possível cadastrar o novo usuários! :/");
 
-        } catch (IOException ex) {
-            Logger.getLogger(ReservaNormalBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
     
     public void excluirUsuario(Pessoa pessoa) {
-        DAO_Pessoa dao = new DAO_Pessoa();
+        PessoaDAO dao = new PessoaHibernate();
 
         try {
-            dao.Apagar(pessoa);
+            dao.apagar(pessoa);
 
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("usuarios.xhtml");
@@ -83,17 +77,15 @@ public class PessoaBean extends AbstractBeanPessoa<Pessoa>{
             } catch (IOException ex) {
                 Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Erro de SQL: " + ex);
             FacesUtil.MensagemErro("Não foi possível excluir o usuário! :/");
         }
     }
     
     public void editarPessoa(Pessoa pessoa) {
-        //this.novaReserva = reserva;
         this.pessoaAtual = pessoa;
         this.id_certo = pessoa.getId();
-        //this.novaReserva.setId(id);
 
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
@@ -107,9 +99,9 @@ public class PessoaBean extends AbstractBeanPessoa<Pessoa>{
     }
     
     public void atualizarPessoa(Pessoa pessoa, Integer id) {
-        DAO_Pessoa dao = new DAO_Pessoa();
+        PessoaDAO dao = new PessoaHibernate();
         try {
-            dao.Atualizar(pessoa, id);
+            dao.atualizar(pessoa);
             
             //limpa os dados da reserva para não aparecer no formulário
             //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("pessoa");
@@ -122,8 +114,6 @@ public class PessoaBean extends AbstractBeanPessoa<Pessoa>{
             
             FacesContext.getCurrentInstance().getExternalContext().redirect("usuarios.xhtml");       
             
-        } catch (SQLException ex) {
-            Logger.getLogger(ReservaNormalBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ReservaNormalBean.class.getName()).log(Level.SEVERE, null, ex);
         }

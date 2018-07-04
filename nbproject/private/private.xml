@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/beans/ReservaNormalBean.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/dao/hibenate/HorarioHibernate.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/test/br/com/reserva/upe/integrado/TestListaReservasBean.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/dao/DAO.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/util/NewClass.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/dao/hibenate/ReservaHibernate.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/dao/DAO_Pessoa.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/test/br/com/reserva/upe/integrado/TestListarMinhasReservasBean.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/dao/hibenate/PessoaHibernate.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/dao/DAO_Reserva.java</file>
+            <file>file:/C:/Users/herik/Desktop/Workspace/Java/Netbeans/Código-Fonte/m_santhos-project_reserve_upe-3919b4f024d2/Reserva-UPE/src/java/br/com/reserva/upe/util/HibernateUtil.java</file>
+        </group>
     </open-files>
 </project-private>

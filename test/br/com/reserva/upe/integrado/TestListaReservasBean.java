@@ -6,7 +6,8 @@
 package br.com.reserva.upe.integrado;
 
 import br.com.reserva.upe.beans.ListarReservasBean;
-import br.com.reserva.upe.dao.DAO_Reserva;
+import br.com.reserva.upe.dao.ReservaDAO;
+import br.com.reserva.upe.dao.hibenate.ReservaHibernate;
 import br.com.reserva.upe.modelo.Reserva;
 import java.sql.SQLException;
 import org.junit.After;
@@ -22,7 +23,7 @@ import org.junit.Test;
  */
 public class TestListaReservasBean {
 
-    public DAO_Reserva dr;
+    public ReservaDAO dr;
     public Reserva r;
     public ListarReservasBean lrb;
     
@@ -41,18 +42,18 @@ public class TestListaReservasBean {
     @Before
     public void setUp() throws SQLException {
         lrb = new ListarReservasBean();
-        dr = new DAO_Reserva();
+        dr = new ReservaHibernate();
         r = new Reserva();
         r.setId(1);
-        r.setIdPessoa(1);
+       // r.setIdPessoa(1);
         r.setData("06/01/2019");
-        dr.Cadastrar(r);
+        dr.cadastrar(r);
        
     }
 
     @After
     public void tearDown() throws SQLException {
-        dr.Apagar(r);
+        dr.apagar(r);
     }
     
     @Test
@@ -60,10 +61,4 @@ public class TestListaReservasBean {
         Reserva r1 = (lrb.getLista()).get(0);
         assertEquals(r1, r);
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

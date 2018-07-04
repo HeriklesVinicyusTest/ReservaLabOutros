@@ -13,16 +13,16 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "conferePessoa")
 @SessionScoped
-public class ValidaLoginBean implements Serializable{
+public class ValidaLoginBean implements Serializable {
 
     private Pessoa pessoaLogada = null;
     private boolean log = false;
-    
+
     private String email;
     private String senha;
 
     public ValidaLoginBean() {
-        
+
     }
 
     public String getEmail() {
@@ -42,84 +42,82 @@ public class ValidaLoginBean implements Serializable{
     }
 
     public void logar() {
-
+        //Ainda mudar
         DAO_Pessoa dao = new DAO_Pessoa();
-        //Pessoa logado = dao.autenticar(p);
-        Pessoa logado = dao.autenticar(new Pessoa(email,senha));
+        Pessoa logado = dao.autenticar(new Pessoa(email, senha));
 
         if (!logado.getNome().equals("")) {
-            
-            
+
             log = true;
-            
+
             if (logado.getTipo().equals("1")) {
                 pessoaLogada = logado;
-                
+
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("home2.xhtml");
                 } catch (IOException ex) {
                     Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
-            if (logado.getTipo().equals("2"))  {
+
+            if (logado.getTipo().equals("2")) {
                 pessoaLogada = logado;
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("homeAdm2.xhtml");
                 } catch (IOException ex) {
                     Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }     
-             
-        }else{
+            }
+
+        } else {
             log = false;
             FacesUtil.MensagemIformativa("Usuário ou senha incorretos!");
-             
+
         }
     }
-    
-    public void testeLog(){
-        if(this.log == false){
+
+    public void testeLog() {
+        if (this.log == false) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }   
+        }
     }
-    
-    public void testeLogProf(){
-        if(this.log == false){
+
+    public void testeLogProf() {
+        if (this.log == false) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
-            if(this.pessoaLogada.getTipo().equals("2")){
+        } else {
+            if (this.pessoaLogada.getTipo().equals("2")) {
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
                 } catch (IOException ex) {
                     Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
-                 }
+                }
             }
         }
     }
-    
-    public void testeLogAdm(){
-        if(this.log == false){
+
+    public void testeLogAdm() {
+        if (this.log == false) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
-            if(this.pessoaLogada.getTipo().equals("1")){
+        } else {
+            if (this.pessoaLogada.getTipo().equals("1")) {
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
                 } catch (IOException ex) {
                     Logger.getLogger(ValidaLoginBean.class.getName()).log(Level.SEVERE, null, ex);
-                 }
+                }
             }
         }
     }
@@ -131,13 +129,13 @@ public class ValidaLoginBean implements Serializable{
     public void setPessoaLogada(Pessoa p) {
         this.pessoaLogada = p;
     }
-    
-     public boolean isLog() {
+
+    public boolean isLog() {
         return log;
     }
 
     public void setLog(boolean log) {
         this.log = log;
     }
-    
+
 }

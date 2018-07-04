@@ -1,13 +1,21 @@
 package br.com.reserva.upe.modelo;
 
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @ManagedBean(name = "pessoa")
 @SessionScoped
 
-public class Pessoa {
-    
+@Entity
+public class Pessoa implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nome;
     private String email;
@@ -18,9 +26,10 @@ public class Pessoa {
         this.email = email;
         this.senha = senha;
     }
-    
-    public Pessoa(){}
-    
+
+    public Pessoa() {
+    }
+
     public int getId() {
         return id;
     }

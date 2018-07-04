@@ -58,7 +58,6 @@ public class TestPessoaBean {
                 aux = true;
             }
         }
-
         assertTrue(aux);
 
     }

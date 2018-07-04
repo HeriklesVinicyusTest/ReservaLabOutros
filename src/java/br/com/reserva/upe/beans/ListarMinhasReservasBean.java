@@ -19,6 +19,7 @@ public class ListarMinhasReservasBean {
     }
     
     public List<Reserva> getLista(Integer idPessoa) {
+        //Ainda mudar
         DAO_Reserva dao = new DAO_Reserva();
         this.lista = dao.listarMinhasReservas(idPessoa);
        for(Reserva r : this.lista){
